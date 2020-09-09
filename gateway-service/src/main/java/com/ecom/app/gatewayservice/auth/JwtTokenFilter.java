@@ -28,7 +28,7 @@ public class JwtTokenFilter extends GenericFilterBean {
         HttpServletResponse response = (HttpServletResponse) res;
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
         if (token == null) {
-            throw new JwtAuthException("null token", HttpStatus.BAD_REQUEST);
+            throw new JwtAuthException("null token,request details : " + ((HttpServletRequest) req).getRequestURL(), HttpStatus.BAD_REQUEST);
         }
         if (token != null) {
             if (!jwtTokenProvider.isTokenPresentInDB(token)) {

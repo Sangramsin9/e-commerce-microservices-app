@@ -1,13 +1,30 @@
 #This configuration file will hold common configs to be shared among all files
-eureka:
-  instance:
+eureka: 
+  client: 
+    serviceUrl: 
+      defaultZone: "http://localhost:8761/eureka/"
+  instance: 
     prefer-ip-address: false
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-feign:
-  client:
-    config:
-      default:
+feign: 
+  client: 
+    config: 
+      default: 
         connectTimeout: 60000
         readTimeout: 10000
+management: 
+  endpoints: 
+    web: 
+      exposure: 
+        include: "*"
+  health: 
+    defaults: 
+      enabled: false
+spring: 
+  boot: 
+    admin: 
+      client: 
+        password: admin
+        url: 
+          - "http://localhost:8090"
+        username: admin
+

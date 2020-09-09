@@ -49,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/*/")//
                 .antMatchers("/**/signup/**")
                 .antMatchers("/**/signin/**")
+                .antMatchers("/**/actuator/**")
                 .antMatchers("/eureka/**")//
                 .antMatchers(HttpMethod.OPTIONS, "/**"); // Request type options should be allowed.
     }
