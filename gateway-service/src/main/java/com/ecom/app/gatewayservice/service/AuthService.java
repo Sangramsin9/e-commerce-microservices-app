@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthService {
@@ -35,12 +36,12 @@ public class AuthService {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username,
                     password));
             User user = accountClient.getUser(username);
-            if (user == null || user.getRole() == null ) {
+            if (user == null || user.getRoles().isEmpty()) {
                 throw new JwtAuthException("Invalid username or password.", HttpStatus.UNAUTHORIZED);
             }
             //NOTE: normally we dont need to add "ROLE_" prefix. Spring does automatically for us.
             //Since we are using custom token using JWT we should add ROLE_ prefix
-            String token =  jwtTokenProvider.createToken(username, Arrays.asList(user.getRole().getName()));
+            String token =  jwtTokenProvider.createToken(username, user.getRoles().stream().map(r-> r.getName()).collect(Collectors.toList()));
             return token;
 
         } catch (AuthenticationException e) {

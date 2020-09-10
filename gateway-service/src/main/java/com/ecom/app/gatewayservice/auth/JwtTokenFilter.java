@@ -4,6 +4,7 @@ import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -53,11 +54,18 @@ public class JwtTokenFilter extends GenericFilterBean {
     }
 
     public void processRBAC(HttpServletRequest request, Authentication authentication) {
-        if (authentication.getAuthorities().contains("ROLE_CUSTOMER") && (request.getMethod().equalsIgnoreCase("POST") || request.getMethod().equalsIgnoreCase("DELETE"))) {
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CUSTOMER"))
+                && (request.getMethod().equalsIgnoreCase("POST") || request.getMethod().equalsIgnoreCase("DELETE"))) {
             if (request.getRequestURI().contains("product")) {
                 throw new InsufficientAuthenticationException("Access denied");
             }
         }
+        if ( request.getMethod().equalsIgnoreCase("GET")
+                && request.getRequestURI().contains("user")
+                && !authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+                throw new InsufficientAuthenticationException("Access denied");
+        }
     }
+
 
 }

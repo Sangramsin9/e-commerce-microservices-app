@@ -1,6 +1,7 @@
 package com.ecom.app.gatewayservice.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 public class User implements Serializable {
 
@@ -14,7 +15,7 @@ public class User implements Serializable {
 
     private String email;
 
-    private UserRole role;
+    private Set<Role> roles;
 
     public Long getId() {
         return id;
@@ -56,11 +57,11 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public UserRole getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(UserRole role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

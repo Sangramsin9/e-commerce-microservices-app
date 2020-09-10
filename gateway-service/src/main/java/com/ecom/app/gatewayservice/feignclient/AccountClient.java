@@ -1,7 +1,7 @@
 package com.ecom.app.gatewayservice.feignclient;
 
+import com.ecom.app.gatewayservice.model.Role;
 import com.ecom.app.gatewayservice.model.User;
-import com.ecom.app.gatewayservice.model.UserRole;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +16,6 @@ public interface AccountClient {
     public ResponseEntity<User> addUser(@RequestBody User user);
 
     @RequestMapping(value = "/users/role", method = RequestMethod.GET)
-    public UserRole getRole(@RequestParam("username") String roleName);
+    public Role getRole(@RequestParam("username") String roleName);
 
 }

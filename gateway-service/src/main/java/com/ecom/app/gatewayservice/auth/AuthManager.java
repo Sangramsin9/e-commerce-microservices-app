@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthManager implements UserDetailsService {
@@ -23,11 +25,11 @@ public class AuthManager implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = accountClient.getUser(s);
-        if (user == null || user.getRole() == null) {
+        if (user == null || user.getRoles().isEmpty()) {
             throw new JwtAuthException("Invalid username or password.", HttpStatus.UNAUTHORIZED);
         }
-        ArrayList<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
+
+        List<GrantedAuthority> authorities = user.getRoles().stream().map(o -> new SimpleGrantedAuthority(o.getName())).collect(Collectors.toList());
 
         boolean enabled = user.getActive() == 1 ? true : false;
         UserPrincipal userDetails = new UserPrincipal(user.getEmail(),user.getPassword(),user.getActive(),

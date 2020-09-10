@@ -1,7 +1,6 @@
 package com.ecom.app.accountservice.controller;
 
 import com.ecom.app.accountservice.model.User;
-import com.ecom.app.accountservice.model.UserRole;
 import com.ecom.app.accountservice.service.UserManager;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

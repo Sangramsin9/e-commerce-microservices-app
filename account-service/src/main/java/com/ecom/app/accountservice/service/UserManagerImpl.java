@@ -1,12 +1,13 @@
 package com.ecom.app.accountservice.service;
 
+import com.ecom.app.accountservice.model.Role;
 import com.ecom.app.accountservice.model.User;
-import com.ecom.app.accountservice.model.UserRole;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserManagerImpl extends BaseManager implements UserManager {
@@ -30,8 +31,8 @@ public class UserManagerImpl extends BaseManager implements UserManager {
     public User save(User user) {
         user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         user.setActive(1);
-        /*UserRole userRole = userRoleRepository.findUserRoleByName("ROLE_CUSTOMER");
-        user.setRole(userRole);*/
+        Set<Role> dbRoles = user.getRoles().stream().map(r -> roleRepository.findById(r.getId()).get()).collect(Collectors.toSet());
+        user.setRoles(dbRoles);
         return getUserRepository().save(user);
     }
 

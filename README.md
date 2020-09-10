@@ -28,9 +28,11 @@
 - **Spring Web MVC** - version 5.2.8 RELEASE
 - **Spring SESSION** - version 2.3.0 RELEASE
 - **Spring Cloud - Open Feign** - version 2.2.4 RELEASE
+- **Spring Boot Admin** : version 2.3.2.RELEASE
 - **Netflix Zuul** - version 2.2.4
 - **Netflix Eureka Client/Server** - version 2.2.4
 - **Netflix Ribbon** - version 2.2.4
+- **Prometheus** : version 2.3.2.RELEASE
 - **NOSQL Database engine** : Redis 6.0.6
 - **Redis Client : JEDIS** - version 2.9.3
 - **Spring Data REDIS** - version 2.3.2 RELEASE
@@ -42,20 +44,20 @@
 
 1. **Signup :**
 
-	- Sample request for creating user with `ROLE_SELLER`. There are total two roles `ROLE_SELLER` and `ROLE_CUSTOMER`
+	- Sample request for creating user with `ROLE_SELLER`. There are total three roles `ROLE_ADMIN`, `ROLE_CUSTOMER` and `ROLE_SELLER`.
 
 	``` 
 	curl -X POST \
-	http://localhost:8081/signup \
-	-H 'Content-Type: application/json' \
-	-H 'Postman-Token: 8bbc633b-3c7f-4ca9-a631-1c541dbb5a87' \
-	-H 'cache-control: no-cache' \
-	-d '{
-	"username": "user3",
-	"password": "123",
-	"role" : {
-	"name" : "ROLE_SELLER"
-	}
+	  http://localhost:8081/signup \
+	  -H 'Content-Type: application/json' \
+	  -H 'Postman-Token: 8c11ed41-86f8-411b-bc90-8aa11aebd849' \
+	  -H 'cache-control: no-cache' \
+	  -d '{
+	    "username": "seller1",
+	    "password": "seller1",
+	    "roles" : [{
+	    	"id":3
+	    }]
 	}'
 	```
 
@@ -65,16 +67,13 @@
 
 	``` 
 	curl -X POST \
-	http://localhost:8081/signup \
-	-H 'Content-Type: application/json' \
-	-H 'Postman-Token: 8bbc633b-3c7f-4ca9-a631-1c541dbb5a87' \
-	-H 'cache-control: no-cache' \
-	-d '{
-	"username": "user3",
-	"password": "123",
-	"role" : {
-	"name" : "ROLE_SELLER"
-	}
+	  http://localhost:8081/signin \
+	  -H 'Content-Type: application/json' \
+	  -H 'Postman-Token: 75fa75f9-c86f-4076-8b7d-747b2cfa3515' \
+	  -H 'cache-control: no-cache' \
+	  -d '{
+	    "username": "seller1",
+	    "password": "seller1"
 	}'
 	```
 
